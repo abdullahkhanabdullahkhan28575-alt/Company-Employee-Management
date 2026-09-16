@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+
+    background: #f4f7fb;
+
+    color: #1f2937;
+
+    min-height: 100vh;
+}
+
+
+.container {
+    width: 90%;
+
+    max-width: 1200px;
+
+    margin: 40px auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    margin-bottom: 30px;
+}
+
+
+.header h1 {
+    font-size: 32px;
+
+    margin-bottom: 8px;
+}
+
+
+.header p {
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    margin-bottom: 30px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.form-card h2 {
+    margin-bottom: 25px;
+}
+
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.input-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.input-group label {
+    font-weight: 600;
+
+    font-size: 14px;
+}
+
+
+.input-group input {
+    padding: 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.input-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.form-buttons {
+    margin-top: 25px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.btn {
+    border: none;
+
+    padding: 11px 20px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.primary {
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.secondary {
+    background: #6b7280;
+
+    color: white;
+}
+
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================
+   EMPLOYEE CARD
+========================= */
+
+.employee-card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.employee-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+.employee-header h2 {
+    margin-bottom: 5px;
+}
+
+
+.employee-header p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+#search {
+    width: 250px;
+
+    padding: 11px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    outline: none;
+}
+
+
+#search:focus {
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+thead {
+    background: #f3f4f6;
+}
+
+
+th,
+td {
+    padding: 15px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+
+th {
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+td {
+    font-size: 14px;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.edit-btn,
+.delete-btn {
+    border: none;
+
+    padding: 8px 13px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-size: 13px;
+
+    margin-right: 5px;
+}
+
+
+.edit-btn {
+    background: #16a34a;
+}
+
+
+.delete-btn {
+    background: #dc2626;
+}
+
+
+.edit-btn:hover,
+.delete-btn:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   EMPTY MESSAGE
+========================= */
+
+.empty-message {
+    text-align: center;
+
+    padding: 25px;
+
+    color: #6b7280;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .container {
+        width: 95%;
+
+        margin: 20px auto;
+    }
+
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .employee-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+
+    #search {
+        width: 100%;
+    }
+
+
+    .form-card,
+    .employee-card {
+        padding: 20px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+
+    th,
+    td {
+        padding: 10px;
+
+        font-size: 12px;
+    }
+
+
+    .edit-btn,
+    .delete-btn {
+        margin-bottom: 5px;
+    }
+
+}

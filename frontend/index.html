@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- cd backend
+PS C:\Users\admin\OneDrive\Documents\Company-Employee-Management\backend> node server.js
+Server running on http://localhost:3000
+MySQL Connected Successfully! -->
+ 
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Company Employee Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+            <div>
+                <h1>Employee Management System</h1>
+                <p>Manage your company employees</p>
+            </div>
+        </header>
+
+
+        <!-- FORM -->
+
+        <section class="form-card">
+
+            <h2 id="formTitle">Add Employee</h2>
+
+            <form id="employeeForm">
+
+                <!-- Hidden ID for Update -->
+                <input
+                    type="hidden"
+                    id="employeeId"
+                >
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="name">
+                            Employee Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter employee name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter email address"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="salary">
+                            Salary
+                        </label>
+
+                        <input
+                            type="number"
+                            id="salary"
+                            placeholder="Enter salary"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="btn primary">
+                        Add Employee
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelBtn"
+                        class="btn secondary"
+                        style="display: none;">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- EMPLOYEE LIST -->
+
+        <section class="employee-card">
+
+            <div class="employee-header">
+
+                <div>
+                    <h2>Employees</h2>
+                    <p>All company employees</p>
+                </div>
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search employee..."
+                >
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="employeeTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
