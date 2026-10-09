@@ -1,4 +1,5 @@
-const API_URL = "https://company-employee-management-production-up.railway.app/employees";
+const API_URL =
+    "https://company-employee-management-production.up.railway.app/employees";
 
 
 
