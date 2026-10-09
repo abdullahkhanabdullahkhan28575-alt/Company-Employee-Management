@@ -4,35 +4,29 @@ const db = require("./db");
 
 const app = express();
 
-// CORS configuration
+// Middleware
 app.use(cors({
     origin: "https://company-employeemanagement.netlify.app"
 }));
 
-// Middleware
 app.use(express.json());
 
-// =========================
-// HOME
-// =========================
-
+// Home route
 app.get("/", (req, res) => {
     res.send("Employee Management Server is Running!");
 });
 
-// =========================
-// GET ALL EMPLOYEES
-// =========================
-
+// GET all employees
 app.get("/employees", (req, res) => {
     const sql = "SELECT * FROM employees ORDER BY id DESC";
 
     db.query(sql, (err, result) => {
         if (err) {
-            console.error("Database error:", err);
+            console.error("GET EMPLOYEES ERROR:", err);
 
             return res.status(500).json({
-                message: "Database error"
+                message: "Database error",
+                error: err.message
             });
         }
 
@@ -40,10 +34,7 @@ app.get("/employees", (req, res) => {
     });
 });
 
-// =========================
-// ADD EMPLOYEE
-// =========================
-
+// ADD employee
 app.post("/employees", (req, res) => {
     const { name, email, salary } = req.body;
 
@@ -60,7 +51,7 @@ app.post("/employees", (req, res) => {
 
     db.query(sql, [name, email, salary], (err, result) => {
         if (err) {
-            console.error("Insert error:", err);
+            console.error("ADD EMPLOYEE ERROR:", err);
 
             if (err.code === "ER_DUP_ENTRY") {
                 return res.status(400).json({
@@ -80,10 +71,7 @@ app.post("/employees", (req, res) => {
     });
 });
 
-// =========================
-// UPDATE EMPLOYEE
-// =========================
-
+// UPDATE employee
 app.put("/employees/:id", (req, res) => {
     const id = req.params.id;
     const { name, email, salary } = req.body;
@@ -102,7 +90,7 @@ app.put("/employees/:id", (req, res) => {
 
     db.query(sql, [name, email, salary, id], (err, result) => {
         if (err) {
-            console.error("Update error:", err);
+            console.error("UPDATE EMPLOYEE ERROR:", err);
 
             return res.status(500).json({
                 message: "Failed to update employee"
@@ -121,10 +109,7 @@ app.put("/employees/:id", (req, res) => {
     });
 });
 
-// =========================
-// DELETE EMPLOYEE
-// =========================
-
+// DELETE employee
 app.delete("/employees/:id", (req, res) => {
     const id = req.params.id;
 
@@ -132,7 +117,7 @@ app.delete("/employees/:id", (req, res) => {
 
     db.query(sql, [id], (err, result) => {
         if (err) {
-            console.error("Delete error:", err);
+            console.error("DELETE EMPLOYEE ERROR:", err);
 
             return res.status(500).json({
                 message: "Failed to delete employee"
@@ -151,10 +136,7 @@ app.delete("/employees/:id", (req, res) => {
     });
 });
 
-// =========================
-// START SERVER
-// =========================
-
+// Start server
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
