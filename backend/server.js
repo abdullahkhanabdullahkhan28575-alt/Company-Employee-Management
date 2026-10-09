@@ -1,18 +1,16 @@
 const express = require("express");
 const cors = require("cors");
-
 const db = require("./db");
-app.use(cors({
-    origin: "https://company-employeemanagement.netlify.app"
-} ));
-
 
 const app = express();
 
-app.use(cors());
+// CORS configuration
+app.use(cors({
+    origin: "https://company-employeemanagement.netlify.app"
+}));
+
+// Middleware
 app.use(express.json());
-
-
 
 // =========================
 // HOME
@@ -22,19 +20,16 @@ app.get("/", (req, res) => {
     res.send("Employee Management Server is Running!");
 });
 
-
 // =========================
 // GET ALL EMPLOYEES
 // =========================
 
 app.get("/employees", (req, res) => {
-
     const sql = "SELECT * FROM employees ORDER BY id DESC";
 
     db.query(sql, (err, result) => {
-
         if (err) {
-            console.log(err);
+            console.error("Database error:", err);
 
             return res.status(500).json({
                 message: "Database error"
@@ -45,16 +40,14 @@ app.get("/employees", (req, res) => {
     });
 });
 
-
 // =========================
 // ADD EMPLOYEE
 // =========================
 
 app.post("/employees", (req, res) => {
-
     const { name, email, salary } = req.body;
 
-    if (!name || !email || !salary) {
+    if (!name || !email || salary === undefined || salary === null) {
         return res.status(400).json({
             message: "All fields are required"
         });
@@ -65,44 +58,37 @@ app.post("/employees", (req, res) => {
         VALUES (?, ?, ?)
     `;
 
-    db.query(
-        sql,
-        [name, email, salary],
-        (err, result) => {
+    db.query(sql, [name, email, salary], (err, result) => {
+        if (err) {
+            console.error("Insert error:", err);
 
-            if (err) {
-
-                if (err.code === "ER_DUP_ENTRY") {
-                    return res.status(400).json({
-                        message: "Email already exists"
-                    });
-                }
-
-                return res.status(500).json({
-                    message: "Failed to add employee"
+            if (err.code === "ER_DUP_ENTRY") {
+                return res.status(400).json({
+                    message: "Email already exists"
                 });
             }
 
-            res.status(201).json({
-                message: "Employee added successfully",
-                id: result.insertId
+            return res.status(500).json({
+                message: "Failed to add employee"
             });
         }
-    );
-});
 
+        res.status(201).json({
+            message: "Employee added successfully",
+            id: result.insertId
+        });
+    });
+});
 
 // =========================
 // UPDATE EMPLOYEE
 // =========================
 
 app.put("/employees/:id", (req, res) => {
-
     const id = req.params.id;
-
     const { name, email, salary } = req.body;
 
-    if (!name || !email || !salary) {
+    if (!name || !email || salary === undefined || salary === null) {
         return res.status(400).json({
             message: "All fields are required"
         });
@@ -114,44 +100,40 @@ app.put("/employees/:id", (req, res) => {
         WHERE id = ?
     `;
 
-    db.query(
-        sql,
-        [name, email, salary, id],
-        (err, result) => {
+    db.query(sql, [name, email, salary, id], (err, result) => {
+        if (err) {
+            console.error("Update error:", err);
 
-            if (err) {
-                return res.status(500).json({
-                    message: "Failed to update employee"
-                });
-            }
-
-            if (result.affectedRows === 0) {
-                return res.status(404).json({
-                    message: "Employee not found"
-                });
-            }
-
-            res.json({
-                message: "Employee updated successfully"
+            return res.status(500).json({
+                message: "Failed to update employee"
             });
         }
-    );
-});
 
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Employee not found"
+            });
+        }
+
+        res.json({
+            message: "Employee updated successfully"
+        });
+    });
+});
 
 // =========================
 // DELETE EMPLOYEE
 // =========================
 
 app.delete("/employees/:id", (req, res) => {
-
     const id = req.params.id;
 
     const sql = "DELETE FROM employees WHERE id = ?";
 
     db.query(sql, [id], (err, result) => {
-
         if (err) {
+            console.error("Delete error:", err);
+
             return res.status(500).json({
                 message: "Failed to delete employee"
             });
@@ -169,11 +151,12 @@ app.delete("/employees/:id", (req, res) => {
     });
 });
 
-
 // =========================
 // START SERVER
 // =========================
 
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
 });
